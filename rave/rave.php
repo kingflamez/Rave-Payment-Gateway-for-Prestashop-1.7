@@ -218,6 +218,7 @@ class Rave extends PaymentModule
         $externalOption = new PaymentOption();
         $externalOption->setCallToActionText($this->l('Pay with Rave'))
             ->setAction($this->context->link->getModuleLink($this->name, 'validation', array(), true))
+            ->setAdditionalInformation($this->context->smarty->fetch('module:rave/views/templates/hook/css.tpl'))
             ->setAdditionalInformation($this->context->smarty->fetch('module:rave/views/templates/front/process.tpl'))
             ->setLogo(Media::getMediaPath(_PS_MODULE_DIR_ . $this->name . '/payment.png'));
 
