@@ -84,7 +84,7 @@ class RavesuccessModuleFrontController extends ModuleFrontController
               'intent' => '$intent'
             );
 
-            $this->module->validateOrder($cart->id, Configuration::get('PS_OS_PAYMENT'), $amount, $this->module->displayName, null, $extra_vars, (int)$cart->id_currency, false, $customer->secure_key);
+            $this->module->validateOrder($cart->id, Configuration::get('PS_OS_RAVE'), $amount, $this->module->displayName, 'Rave txref: ' . $_GET['txref'], $extra_vars, (int)$cart->id_currency, false, $customer->secure_key);
             Tools::redirect('index.php?controller=order-confirmation&id_cart=' . $cart->id . '&id_module=' . $this->module->id . '&id_order=' . $this->module->currentOrder . '&key=' . $customer->secure_key);
 
           }
@@ -115,7 +115,7 @@ class RavesuccessModuleFrontController extends ModuleFrontController
             'intent' => '$intent'
           );
 
-          $this->module->validateOrder($cart->id, Configuration::get('PS_OS_PAYMENT'), $amount, $this->module->displayName, null, $extra_vars, (int)$cart->id_currency, false, $customer->secure_key);
+          $this->module->validateOrder($cart->id, Configuration::get('PS_OS_RAVE'), $amount, $this->module->displayName, 'Rave txref: ' . $_GET['txref'], $extra_vars, (int)$cart->id_currency, false, $customer->secure_key);
           Tools::redirect('index.php?controller=order-confirmation&id_cart=' . $cart->id . '&id_module=' . $this->module->id . '&id_order=' . $this->module->currentOrder . '&key=' . $customer->secure_key);
 
         }

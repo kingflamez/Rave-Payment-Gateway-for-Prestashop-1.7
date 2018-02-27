@@ -68,14 +68,13 @@ class Rave extends PaymentModule
         if (!parent::install() || !$this->registerHook('paymentReturn') || !$this->registerHook('paymentOptions') || !$this->registerHook('header')) {
             return false;
         }
-        var_dump ("hello");
-        die();
         // TODO : Cek insert new state, Custom CSS
         $newState = new OrderState();
         
         $newState->send_email = true;
         $newState->module_name = $this->name;
         $newState->invoice = true;
+        $newState->color = "#04b404";
         $newState->color = "#04b404";
         $newState->unremovable = false;
         $newState->logable = true;
@@ -90,9 +89,9 @@ class Rave extends PaymentModule
             if ($lang['iso_code'] == 'id') {
                 $newState->name[(int)$lang['id_lang']] = 'Menunggu pembayaran via Rave';
             } else {
-                $newState->name[(int)$lang['id_lang']] = 'Pay via Rave';
+                $newState->name[(int)$lang['id_lang']] = 'Payment successful via Rave';
             }
-            $newState->template = "rave";
+            $newState->template = "payment";
         }
 
         if ($newState->add()) {
@@ -250,7 +249,7 @@ class Rave extends PaymentModule
         if (in_array(
             $state,
             array(
-                Configuration::get('PS_OS_PAYMENT'),
+                Configuration::get('PS_OS_RAVE'),
                 Configuration::get('PS_OS_OUTOFSTOCK'),
                 Configuration::get('PS_OS_OUTOFSTOCK_UNPAID'),
             )
