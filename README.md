@@ -3,7 +3,7 @@
 This plugin allows you to accept payment on prestashop 1.7 seamlessly
 
 ## Requirements
-- A prestashop Account
+- A Prestashop Site
 - A [Rave Account](https://rave.flutterwave.com/)
 
 > Get a `Live Account` [here](https://rave.flutterwave.com/)
