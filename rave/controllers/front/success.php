@@ -41,14 +41,16 @@ class RavesuccessModuleFrontController extends ModuleFrontController
    */
   public function postProcess()
   {
-    $publicKey = Configuration::get('RAVE_PUBLICKEY');
-    $secretKey = Configuration::get('RAVE_SECRETKEY');
 
 
     if (Configuration::get('RAVE_ENV') == 1) {
       $env = 'staging';
+      $publicKey = Configuration::get('RAVE_TEST_PUBLICKEY');
+      $secretKey = Configuration::get('RAVE_TEST_SECRETKEY');
     } else {
       $env = 'live';
+      $publicKey = Configuration::get('RAVE_LIVE_PUBLICKEY');
+      $secretKey = Configuration::get('RAVE_LIVE_SECRETKEY');
     }
 
     $ref = '';

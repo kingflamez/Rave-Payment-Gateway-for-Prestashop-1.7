@@ -53,7 +53,7 @@ class Rave extends PaymentModule
         $this->currencies = true;
         $this->currencies_mode = 'checkbox';
 
-        $config = Configuration::getMultiple(array('RAVE_SECRETKEY','RAVE_PUBLICKEY','RAVE_MERCHANT_LOGO','RAVE_PAYMENT_METHOD','RAVE_MERCHANT_COUNTRY','RAVE_ENV'));
+        $config = Configuration::getMultiple(array('RAVE_LIVE_SECRETKEY', 'RAVE_LIVE_PUBLICKEY', 'RAVE_TEST_SECRETKEY', 'RAVE_TEST_PUBLICKEY', 'RAVE_MERCHANT_LOGO','RAVE_PAYMENT_METHOD','RAVE_MERCHANT_COUNTRY','RAVE_ENV'));
      
         $this->bootstrap = true;
         parent::__construct();
@@ -106,8 +106,10 @@ class Rave extends PaymentModule
 
     public function uninstall()
     {
-        if (!Configuration::deleteByName('RAVE_SECRETKEY')
-                || !Configuration::deleteByName('RAVE_PUBLICKEY')
+        if (!Configuration::deleteByName('RAVE_LIVE_SECRETKEY')
+            || !Configuration::deleteByName('RAVE_LIVE_PUBLICKEY') 
+            || !Configuration::deleteByName('RAVE_TEST_SECRETKEY')
+            || !Configuration::deleteByName('RAVE_TEST_PUBLICKEY')
                 || !Configuration::deleteByName('RAVE_MERCHANT_LOGO')
                 || !Configuration::deleteByName('RAVE_PAYMENT_METHOD')
                 || !Configuration::deleteByName('RAVE_MERCHANT_COUNTRY')
@@ -120,8 +122,10 @@ class Rave extends PaymentModule
     protected function _postProcess()
     {
         if (Tools::isSubmit('btnSubmit')) {
-            Configuration::updateValue('RAVE_SECRETKEY', Tools::getValue('RAVE_SECRETKEY'));
-            Configuration::updateValue('RAVE_PUBLICKEY', Tools::getValue('RAVE_PUBLICKEY'));
+            Configuration::updateValue('RAVE_LIVE_SECRETKEY', Tools::getValue('RAVE_LIVE_SECRETKEY'));
+            Configuration::updateValue('RAVE_LIVE_PUBLICKEY', Tools::getValue('RAVE_LIVE_PUBLICKEY'));
+            Configuration::updateValue('RAVE_TEST_SECRETKEY', Tools::getValue('RAVE_TEST_SECRETKEY'));
+            Configuration::updateValue('RAVE_TEST_PUBLICKEY', Tools::getValue('RAVE_TEST_PUBLICKEY'));
             Configuration::updateValue('RAVE_MERCHANT_LOGO', Tools::getValue('RAVE_MERCHANT_LOGO'));
             Configuration::updateValue('RAVE_PAYMENT_METHOD', Tools::getValue('RAVE_PAYMENT_METHOD'));
             Configuration::updateValue('RAVE_MERCHANT_COUNTRY', Tools::getValue('RAVE_MERCHANT_COUNTRY'));
@@ -177,12 +181,14 @@ class Rave extends PaymentModule
         $config = $this->getConfigFieldsValues();
         if ($config['RAVE_ENV'] == 1) {
             $env = 'staging';
+            $publicKey = $config['RAVE_TEST_PUBLICKEY'];
+            $secretKey = $config['RAVE_TEST_SECRETKEY'];
         } else {
             $env = 'live';
+            $publicKey = $config['RAVE_LIVE_PUBLICKEY'];
+            $secretKey = $config['RAVE_LIVE_SECRETKEY'];
         }
 
-        $publicKey = $config['RAVE_PUBLICKEY'];
-        $secretKey = $config['RAVE_SECRETKEY'];
         $ref = 'order_' . $params['cart']->id . '_' . time();
         $redirectURL = $this->context->link->getModuleLink($this->name, 'success', array(), true);
 
@@ -219,7 +225,7 @@ class Rave extends PaymentModule
             ->setAction($this->context->link->getModuleLink($this->name, 'validation', array(), true))
             ->setAdditionalInformation($this->context->smarty->fetch('module:rave/views/templates/hook/css.tpl'))
             ->setAdditionalInformation($this->context->smarty->fetch('module:rave/views/templates/front/process.tpl'))
-            ->setLogo(Media::getMediaPath(_PS_MODULE_DIR_ . $this->name . '/payment.png'));
+            ->setLogo(Media::getMediaPath(_PS_MODULE_DIR_ . $this->name . '/rave.png'));
 
         if ($gateway_chosen == 'rave') {
             $externalOption->setInputs([
@@ -321,17 +327,30 @@ class Rave extends PaymentModule
                             )
                         ),
                     ),
-                    
+
                     array(
                         'type' => 'text',
-                        'label' => $this->trans('Secret key', array(), 'Modules.Rave.Admin'),
-                        'name' => 'RAVE_SECRETKEY',
+                        'label' => $this->trans('Live Secret key', array(), 'Modules.Rave.Admin'),
+                        'name' => 'RAVE_LIVE_SECRETKEY',
                         'required' => true
                     ),
                     array(
                         'type' => 'text',
-                        'label' => $this->trans('Public key', array(), 'Modules.Rave.Admin'),
-                        'name' => 'RAVE_PUBLICKEY',
+                        'label' => $this->trans('Live Public key', array(), 'Modules.Rave.Admin'),
+                        'name' => 'RAVE_LIVE_PUBLICKEY',
+                        'required' => true
+                    ),
+
+                    array(
+                        'type' => 'text',
+                        'label' => $this->trans('Test Secret key', array(), 'Modules.Rave.Admin'),
+                        'name' => 'RAVE_TEST_SECRETKEY',
+                        'required' => true
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->trans('Test Public key', array(), 'Modules.Rave.Admin'),
+                        'name' => 'RAVE_TEST_PUBLICKEY',
                         'required' => true
                     ),
                     array(
@@ -423,8 +442,10 @@ class Rave extends PaymentModule
     public function getConfigFieldsValues()
     {
         return array(
-            'RAVE_SECRETKEY' => Tools::getValue('RAVE_SECRETKEY', Configuration::get('RAVE_SECRETKEY')),
-            'RAVE_PUBLICKEY' => Tools::getValue('RAVE_PUBLICKEY', Configuration::get('RAVE_PUBLICKEY')),
+            'RAVE_LIVE_SECRETKEY' => Tools::getValue('RAVE_LIVE_SECRETKEY', Configuration::get('RAVE_LIVE_SECRETKEY')),
+            'RAVE_LIVE_PUBLICKEY' => Tools::getValue('RAVE_LIVE_PUBLICKEY', Configuration::get('RAVE_LIVE_PUBLICKEY')),
+            'RAVE_TEST_SECRETKEY' => Tools::getValue('RAVE_TEST_SECRETKEY', Configuration::get('RAVE_TEST_SECRETKEY')),
+            'RAVE_TEST_PUBLICKEY' => Tools::getValue('RAVE_TEST_PUBLICKEY', Configuration::get('RAVE_TEST_PUBLICKEY')),
             'RAVE_MERCHANT_LOGO' => Tools::getValue('RAVE_MERCHANT_LOGO', Configuration::get('RAVE_MERCHANT_LOGO')),
             'RAVE_PAYMENT_METHOD' => Tools::getValue('RAVE_PAYMENT_METHOD', Configuration::get('RAVE_PAYMENT_METHOD')),
             'RAVE_MERCHANT_COUNTRY' => Tools::getValue('RAVE_MERCHANT_COUNTRY', Configuration::get('RAVE_MERCHANT_COUNTRY')),
