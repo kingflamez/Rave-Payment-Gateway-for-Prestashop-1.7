@@ -2,9 +2,16 @@
 
 This plugin allows you to accept payment on prestashop 1.7 seamlessly
 
+## Requirements
+- A prestashop Account
+- A [Rave Account](https://rave.flutterwave.com/)
+
+> Get a `Live Account` [here](https://rave.flutterwave.com/)
+
+> Get a `Test Account` [here](https://raveappv2.herokuapp.com/)
 ## Installation
 
-1. [Download the plugin](rave.zip?raw=true)
+1. Download the plugin [here](https://github.com/kingflamez/Rave-Payment-Gateway-for-Prestashop-1.7/releases/latest)
 2. Go to your prestashop back office (admin)
 3. Go to the `Improve Section` on the menu, then go to `Modules` > `Modules & Services`
 4. Click on `Upload A Module`
