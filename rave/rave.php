@@ -403,6 +403,10 @@ class Rave extends PaymentModule
                                 array(
                                     'id_option_api' => 'KE',
                                     'name_option_api' => $this->l('Kenya')
+                                ),
+                                array(
+                                    'id_option_api' => 'ZA',
+                                    'name_option_api' => $this->l('South Africa')
                                 )
                             ),
                             'id' => 'id_option_api',
