@@ -327,13 +327,6 @@ class Rave extends PaymentModule
                             )
                         ),
                     ),
-
-                    array(
-                        'type' => 'text',
-                        'label' => $this->trans('Live Secret key', array(), 'Modules.Rave.Admin'),
-                        'name' => 'RAVE_LIVE_SECRETKEY',
-                        'required' => true
-                    ),
                     array(
                         'type' => 'text',
                         'label' => $this->trans('Live Public key', array(), 'Modules.Rave.Admin'),
@@ -343,14 +336,21 @@ class Rave extends PaymentModule
 
                     array(
                         'type' => 'text',
-                        'label' => $this->trans('Test Secret key', array(), 'Modules.Rave.Admin'),
-                        'name' => 'RAVE_TEST_SECRETKEY',
+                        'label' => $this->trans('Live Secret key', array(), 'Modules.Rave.Admin'),
+                        'name' => 'RAVE_LIVE_SECRETKEY',
                         'required' => true
                     ),
+
                     array(
                         'type' => 'text',
                         'label' => $this->trans('Test Public key', array(), 'Modules.Rave.Admin'),
                         'name' => 'RAVE_TEST_PUBLICKEY',
+                        'required' => true
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->trans('Test Secret key', array(), 'Modules.Rave.Admin'),
+                        'name' => 'RAVE_TEST_SECRETKEY',
                         'required' => true
                     ),
                     array(
