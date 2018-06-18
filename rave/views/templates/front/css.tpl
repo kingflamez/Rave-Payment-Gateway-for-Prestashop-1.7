@@ -24,13 +24,14 @@
 *}
 
 <style type="text/css">
-	body#checkout section.checkout-step .payment-options label {
+	.payment-option {
 		display: table-cell;
 		text-align: left !important;
 		margin-bottom: 10px !important;
 	}
-	body#checkout section.checkout-step .payment-options label img {
+	.payment-option img {
 		display: block !important;
-		height: 70px !important;
+    height: 100px !important;
+    margin-top: 17px;
 	}
 </style>

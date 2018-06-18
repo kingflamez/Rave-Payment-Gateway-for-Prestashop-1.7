@@ -432,7 +432,7 @@ class Rave {
         // make request to endpoint using unirest.
         $headers = array('Content-Type' => 'application/json');
         $body = Body::json($data);
-        $url = $this->baseUrl.'/flwv3-pug/getpaidx/api/xrequery';
+        $url = $this->baseUrl.'/flwv3-pug/getpaidx/api/v2/verify';
 
         // Make `POST` request and handle response with unirest
         $response = Request::post($url, $headers, $body);

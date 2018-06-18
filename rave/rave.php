@@ -221,9 +221,17 @@ class Rave extends PaymentModule
             $postfields['hosted_payment'] = 1;
 
         $externalOption = new PaymentOption();
+        $this->context->controller->registerStylesheet(
+            'rave-style',
+            'modules/rave/css/rave.css',
+            [
+                'media' => 'all',
+                'priority' => 200,
+            ]
+        );
         $externalOption->setCallToActionText($this->l('Pay with Rave'))
             ->setAction($this->context->link->getModuleLink($this->name, 'validation', array(), true))
-            ->setAdditionalInformation($this->context->smarty->fetch('module:rave/views/templates/hook/css.tpl'))
+            ->setAdditionalInformation($this->context->smarty->fetch('module:rave/views/templates/front/css.tpl'))
             ->setAdditionalInformation($this->context->smarty->fetch('module:rave/views/templates/front/process.tpl'))
             ->setLogo(Media::getMediaPath(_PS_MODULE_DIR_ . $this->name . '/rave.png'));
 
